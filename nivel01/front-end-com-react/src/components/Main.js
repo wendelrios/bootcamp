@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css'
-import backgroundImage from '../assets/background.jpg'
+// import backgroundImage from '../assets/background.jpg'
+import api from '../services/api'
 
 export function Opening(props){
   return(
@@ -12,22 +13,34 @@ export function Opening(props){
 }
 
 export default function App(){
-  const [projects, setProjects] = useState(['Desenvolvimento Web', 'Front-end web'])
+  const [projects, setProjects] = useState([])
 
-  function handleAddProject(){
-    setProjects([...projects, `Novo projeto ${Date.now()}`])
+  useEffect(() => {
+    api.get('repositories').then(response => {
+      setProjects(response.data)
+    })
+  }, [])
 
-    console.log(projects)
+  async function handleAddProject(){
+    // setProjects([...projects, `Novo projeto ${Date.now()}`])
+    const response = await api.post('repositories', {
+      title: `Novo repositorio ${Date.now()}`,
+      owner: 'Wendel Rios'
+    })
+
+    const project = response.data;
+
+    setProjects([...projects, project])
   }
 
   return (
     <>
       <Opening subject="State"/>
 
-      <img width={400} src={backgroundImage}/>
+      {/* <img width={400} src={backgroundImage}/> */}
 
       <ul>
-        {projects.map(project => <li key={project}>{project}</li>)}
+        {projects.map(project => <li key={project.id}>{project.title}</li>)}
       </ul>
 
       <button type="button" onClick={handleAddProject}>Adicionar Projeto</button>

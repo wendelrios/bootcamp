@@ -6,6 +6,10 @@
 
 body{
   font: 14px sans-serif;
-  color:	indigo
+  color:	indigo;
+  background-color: black;
 }
 
+li{
+  color: white;
+}
