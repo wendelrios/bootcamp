@@ -3,11 +3,11 @@ import '../App.css'
 // import backgroundImage from '../assets/background.jpg'
 import api from '../services/api'
 
-export function Opening(props){
+export function Opening({subject}){
   return(
     <div className="Opening">
       <h1>Primeira Pagina Oficial com meus conhecimentos em React</h1>
-      <h2>vou usar conceitos de {props.subject}</h2>
+      <h2>vou usar conceitos de {subject}</h2>
     </div>
   );
 }
