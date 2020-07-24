@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css'
-// import backgroundImage from '../assets/background.jpg'
 import api from '../services/api'
 
 export function Opening({subject}){
@@ -22,23 +21,15 @@ export default function App(){
   }, [])
 
   async function handleAddProject(){
-    // setProjects([...projects, `Novo projeto ${Date.now()}`])
     const response = await api.post('repositories', {
       title: `Novo repositorio ${Date.now()}`,
       owner: 'Wendel Rios'
-    })
-
-    const project = response.data;
-
-    setProjects([...projects, project])
+    }).then(response => useState([...projects, response]))
   }
 
   return (
     <>
       <Opening subject="State"/>
-
-      {/* <img width={400} src={backgroundImage}/> */}
-
       <ul>
         {projects.map(project => <li key={project.id}>{project.title}</li>)}
       </ul>
